@@ -2,19 +2,44 @@ console.log('yoyo-fitness');
 $(document).ready(function () {
     var progressBarWidth=0;
     var progressBarUpdateInterval;
-    bindEvents();
+    var athletes = ['Sarath', 'Athira', 'Arjun', 'Sarika'];
+    var fitnessBeepData = null;
+    populateAthletesDetails();
+    hideAtheleteDiv();
     hideRunningAlert();
+    bindEvents();
     var startTime = "00:00";
 
     function bindEvents() {
       $(".glyphicon.glyphicon-play-circle").click(function () {
           hideStartButton();
           getFinessDetailsByStartTimeViaApi('00:00');
-        //showRunningAlert();
-      //  progressBarUpdateInterval = setInterval(() => {
-      //      updateProgressBar();
-      //    }, 100);
+          showAthletesDetails();
       });
+        $(".btn-primary").click(function (element) {
+            console.log(element.currentTarget.classList.add('disabled'));
+        });
+        $(".btn-danger").click(function (element) {
+            showResult(element);
+        });
+    }
+
+    function populateAthletesDetails() {
+        $.each(athletes, function (index, value) {
+            var atheleteDivModel = `<div class="row">
+                    <div class="col-sm-3"><h4>{athele-name}</h4></div>
+                    <div class="col-sm-3"><button type="button" class="btn btn-primary">Warning</button></div>
+                    <div class="col-sm-3"><button type="button" class="btn btn-danger">Error</button></div>
+                    <div><h4 id="result"> </div>
+                </div><hr>`;
+            var atheleteResolveModel = atheleteDivModel.replace('{athele-name}', value);
+            $('#athlete-details').append(atheleteResolveModel);
+        });
+    }
+    function showResult(element) {
+        var result = "Result : " + fitnessBeepData.speedLevel + " : " + fitnessBeepData.shuttleNo;
+        $(element.currentTarget.parentElement.parentElement).find("#result").text(result);
+        $(element.currentTarget.parentElement.parentElement).find('button').remove();
     }
 
     function updateProgressBar(width) {
@@ -26,6 +51,13 @@ $(document).ready(function () {
       $('.progress-bar').css('width',progressBarWidth+'%');
       $('.progress-bar').text(progressBarWidth+'%');
       
+    }
+
+    function hideAtheleteDiv() {
+        $('#athlete-details').hide();
+    }
+    function showAthletesDetails() {
+        $('#athlete-details').show();
     }
     
     function disableStartButton(){
@@ -102,7 +134,7 @@ $(document).ready(function () {
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             success: function (result) {
-                console.log({ result });
+                fitnessBeepData = result;
                 pouplateRunningAlertData(result);
             },
             error: function (error) {
