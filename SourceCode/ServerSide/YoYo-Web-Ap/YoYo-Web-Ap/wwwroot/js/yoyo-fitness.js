@@ -54,13 +54,20 @@ $(document).ready(function () {
         showRunningAlert();
         startTime = getNextShuttleTime(fitnessRatingData.commulativeTime);
         updateProgressBar(parseInt(fitnessRatingData.accumulatedShuttleDistance)-40);
-        setTimeout(getFinessDetailsByStartTimeViaApi, getTimeout(fitnessRatingData.commulativeTime));
+        setTimeout(getFinessDetailsByStartTimeViaApi, getTimeout(fitnessRatingData));
     }
 
-    function getTimeout(commulativeTime) {
-        var timeSplit = commulativeTime.split(":");
-        var timeout = parseInt(timeSplit[1]) * 1000;
-        return timeout;
+    function getTimeout(fitnessRatingData) {
+        var cumulativeTimeSeconds = parseInt(fitnessRatingData.commulativeTime.split(":")[1]); 
+        var startTimeSeconds = parseInt(fitnessRatingData.startTime.split(":")[1]);
+        var timeout = 0;
+        if (cumulativeTimeSeconds > startTimeSeconds) {
+            timeout = cumulativeTimeSeconds - startTimeSeconds;
+        } else {
+            timeout = cumulativeTimeSeconds+60 - startTimeSeconds;
+        }
+        console.log(timeout);
+        return timeout*1000;
     }
 
     function getTotalDistance(accumulatedShuttleDistance) {
