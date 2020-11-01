@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "o7VCo40n9nPTqYtB7zQcp9IZ0RX9kM2woRXjsOQlGq4h6TR3AqXXiTwIE/xAK21UF8XKngwe+VPhxy9SbN/8tA==",
+  "success": true,
+  "projectFilePath": "D:\\Project\\DigitalMinds\\SourceCode\\ServerSide\\YoYo-Web-Ap\\FitnessRatingBeepServices\\FitnessRatingBeepServices.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

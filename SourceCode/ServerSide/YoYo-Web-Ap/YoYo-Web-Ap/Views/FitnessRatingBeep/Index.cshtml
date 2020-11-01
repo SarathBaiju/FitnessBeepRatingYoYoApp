@@ -1,0 +1,73 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Yo-Yo App</title>
+    <link rel="stylesheet" href="~/css/yoyo-fitness.css">
+</head>
+<script src="~/js/yoyo-fitness.js"></script>
+<body>
+    <div class="container" style="border: 1px solid black;">
+        <div class="text-center">
+            <h4><b>YO-YO App</b></h4>
+        </div>
+        <div class="progress">
+            <div class="progress-bar" style="width: 0%">0%</div>
+        </div>
+        <div class="startButton">
+            <span class="glyphicon glyphicon-play-circle">START</span>
+            <div class="running-alert">
+                <p>Level <b id="speedLevel"></b></p>
+                <p>Shuttle <b id="shuttle"></b></p>
+                <p>Speed <b id="levelSpeed">14</b>km/h</p>
+            </div>
+        </div>
+        <div class="result-wrapper">
+            <div class="row">
+                <div class="col-sm-4" style="background-color: lightyellow;text-align:center">
+                    <span><b>NEXT SHUTTLE</b></span><br>
+                    <span id="nextShuttleTime"></span>
+                </div>
+                <div class="col-sm-4" style="background-color: lightsalmon;text-align:center">
+                    <span><b>TOTAL TIME</b></span><br>
+                    <span id="totalTime"></span>
+                </div>
+                <div class="col-sm-4" style="background-color: lightgreen;text-align:center">
+                    <span><b>TOTAL DISTANCE</b></span><br>
+                    <span id="TotalDistance"></span>
+                </div>
+            </div>
+            <div class="track">
+                <h3>Track</h3><hr>
+                <div class="row">
+                    <div class="col-sm-4"><h4>1.Sarath</h4></div>
+                    <div class="col-sm-4"><button type="button" class="btn btn-primary">Warning</button></div>
+                    <div class="col-sm-4"><button type="button" class="btn btn-danger">Error</button></div>
+                </div><hr>
+                <div class="row">
+                    <div class="col-sm-4"><h4>2.Arjun</h4></div>
+                    <div class="col-sm-4"><button type="button" class="btn btn-primary">Warning</button></div>
+                    <div class="col-sm-4"><button type="button" class="btn btn-danger">Error</button></div>
+                </div><hr>
+                <div class="row">
+                    <div class="col-sm-4"><h4>3.Athira</h4></div>
+                    <div class="col-sm-4"><h4>11-3</h4></div>
+                </div><hr>
+                <div class="row">
+                    <div class="col-sm-4"><h4>4.Sarika</h4></div>
+                    <div class="col-sm-4"><h4>18-3</h4></div>
+                </div><hr>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,9 @@
+D:\Project\DigitalMinds\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\bin\Debug\netcoreapp3.1\FitnessRatingBeepRepository.deps.json
+D:\Project\DigitalMinds\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\bin\Debug\netcoreapp3.1\FitnessRatingBeepRepository.dll
+D:\Project\DigitalMinds\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\bin\Debug\netcoreapp3.1\FitnessRatingBeepRepository.pdb
+D:\Project\DigitalMinds\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\obj\Debug\netcoreapp3.1\FitnessRatingBeepRepository.csprojAssemblyReference.cache
+D:\Project\DigitalMinds\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\obj\Debug\netcoreapp3.1\FitnessRatingBeepRepository.AssemblyInfoInputs.cache
+D:\Project\DigitalMinds\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\obj\Debug\netcoreapp3.1\FitnessRatingBeepRepository.AssemblyInfo.cs
+D:\Project\DigitalMinds\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\obj\Debug\netcoreapp3.1\FitnessRatingBeepRepository.dll
+D:\Project\DigitalMinds\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\obj\Debug\netcoreapp3.1\FitnessRatingBeepRepository.pdb
+D:\Project\DigitalMinds\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\obj\Debug\netcoreapp3.1\FitnessRatingBeepRepository.csproj.CoreCompileInputs.cache

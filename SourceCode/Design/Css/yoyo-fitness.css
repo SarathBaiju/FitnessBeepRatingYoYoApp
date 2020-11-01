@@ -1,0 +1,36 @@
+.button {
+    background-color: #4caf50; /* Green */
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 25px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  .progress{
+      background-color: lightblue;
+  }
+  .start {
+    border-radius: 50%;
+  }
+  .startButton {
+    text-align: center;
+    width: 35%;
+    border-radius: 50%;
+    background-color: whitesmoke;
+    margin: 0 auto;
+    padding: 13%;
+  }
+  .glyphicon{
+      font-weight: 500;
+  }
+  .result-wrapper{
+      margin-top: 10px;
+  }
+  .vl {
+    border-left: 6px solid green;
+    height: 10px;
+  }
