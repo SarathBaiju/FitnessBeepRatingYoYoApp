@@ -57,11 +57,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Project\\DigitalMinds\\SourceCode\\ServerSide\\YoYo-Web-Ap\\FitnessRatingBeepRepository\\FitnessRatingBeepRepository.csproj",
+      "projectUniqueName": "D:\\Project\\GitHub\\SourceCode\\ServerSide\\YoYo-Web-Ap\\FitnessRatingBeepRepository\\FitnessRatingBeepRepository.csproj",
       "projectName": "FitnessRatingBeepRepository",
-      "projectPath": "D:\\Project\\DigitalMinds\\SourceCode\\ServerSide\\YoYo-Web-Ap\\FitnessRatingBeepRepository\\FitnessRatingBeepRepository.csproj",
+      "projectPath": "D:\\Project\\GitHub\\SourceCode\\ServerSide\\YoYo-Web-Ap\\FitnessRatingBeepRepository\\FitnessRatingBeepRepository.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "D:\\Project\\DigitalMinds\\SourceCode\\ServerSide\\YoYo-Web-Ap\\FitnessRatingBeepRepository\\obj\\",
+      "outputPath": "D:\\Project\\GitHub\\SourceCode\\ServerSide\\YoYo-Web-Ap\\FitnessRatingBeepRepository\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",

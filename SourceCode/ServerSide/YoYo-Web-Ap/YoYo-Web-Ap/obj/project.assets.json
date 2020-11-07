@@ -6112,11 +6112,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Project\\DigitalMinds\\SourceCode\\ServerSide\\YoYo-Web-Ap\\YoYo-Web-Ap\\YoYo-Web-Ap.csproj",
+      "projectUniqueName": "D:\\Project\\GitHub\\SourceCode\\ServerSide\\YoYo-Web-Ap\\YoYo-Web-Ap\\YoYo-Web-Ap.csproj",
       "projectName": "YoYo-Web-Ap",
-      "projectPath": "D:\\Project\\DigitalMinds\\SourceCode\\ServerSide\\YoYo-Web-Ap\\YoYo-Web-Ap\\YoYo-Web-Ap.csproj",
+      "projectPath": "D:\\Project\\GitHub\\SourceCode\\ServerSide\\YoYo-Web-Ap\\YoYo-Web-Ap\\YoYo-Web-Ap.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "D:\\Project\\DigitalMinds\\SourceCode\\ServerSide\\YoYo-Web-Ap\\YoYo-Web-Ap\\obj\\",
+      "outputPath": "D:\\Project\\GitHub\\SourceCode\\ServerSide\\YoYo-Web-Ap\\YoYo-Web-Ap\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -6132,8 +6132,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "D:\\Project\\DigitalMinds\\SourceCode\\ServerSide\\YoYo-Web-Ap\\FitnessRatingBeepServices\\FitnessRatingBeepServices.csproj": {
-              "projectPath": "D:\\Project\\DigitalMinds\\SourceCode\\ServerSide\\YoYo-Web-Ap\\FitnessRatingBeepServices\\FitnessRatingBeepServices.csproj"
+            "D:\\Project\\GitHub\\SourceCode\\ServerSide\\YoYo-Web-Ap\\FitnessRatingBeepServices\\FitnessRatingBeepServices.csproj": {
+              "projectPath": "D:\\Project\\GitHub\\SourceCode\\ServerSide\\YoYo-Web-Ap\\FitnessRatingBeepServices\\FitnessRatingBeepServices.csproj"
             }
           }
         }
