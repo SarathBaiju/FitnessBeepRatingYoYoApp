@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessRatingBeepRepository
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D24E77AF-3CF1-4EE3-9B90-8A586F6CDEDB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Common", "4.Common", "{B02AABA6-F984-461B-92ED-6D5923C41CCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessRatingBeepCommon", "FitnessRatingBeepCommon\FitnessRatingBeepCommon.csproj", "{15B63FAD-49CD-4045-B6B6-98554105C7CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,10 @@ Global
 		{E14703A9-AEA4-4E26-A020-F2BA9101E058}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E14703A9-AEA4-4E26-A020-F2BA9101E058}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E14703A9-AEA4-4E26-A020-F2BA9101E058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15B63FAD-49CD-4045-B6B6-98554105C7CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15B63FAD-49CD-4045-B6B6-98554105C7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15B63FAD-49CD-4045-B6B6-98554105C7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15B63FAD-49CD-4045-B6B6-98554105C7CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +51,7 @@ Global
 		{B66ECD6B-E1ED-4987-BAB3-AE4E3512FFB4} = {7BBF009D-8663-4742-8D77-9050D8F1BDCA}
 		{7957E0B4-E6D7-4310-8756-1B2117E9D4E4} = {B43180DA-95C1-47EB-A85F-7CDEB02E60B1}
 		{E14703A9-AEA4-4E26-A020-F2BA9101E058} = {0A1B5A58-ECFA-4D9A-8B7C-145C8C9E0D19}
+		{15B63FAD-49CD-4045-B6B6-98554105C7CD} = {B02AABA6-F984-461B-92ED-6D5923C41CCF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E5060CB1-09A6-4608-AACC-6CCE70472A31}

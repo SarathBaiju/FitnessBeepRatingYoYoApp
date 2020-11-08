@@ -20,7 +20,7 @@ namespace YoYo_Web_Ap.Controllers.UI
 
         public IActionResult Index()
         {
-            return View();
+            return Redirect("yoyo-app/home");
         }
 
         public IActionResult Privacy()

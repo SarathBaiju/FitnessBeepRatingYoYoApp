@@ -1,38 +1,46 @@
-console.log('yoyo-fitness');
 $(document).ready(function () {
-    var progressBarWidth=0;
+    var progressBarWidth = 0;
     var progressBarUpdateInterval;
-    var athletes = ['Sarath', 'Athira', 'Arjun', 'Sarika'];
+    var athletes = {
+        atheleteDtos: [], isWarning: false
+    };
+   // getAtheleteDetails();
     var fitnessBeepData = null;
-    populateAthletesDetails();
+    bindEvents();
     hideAtheleteDiv();
     hideRunningAlert();
-    bindEvents();
     var startTime = "00:00";
 
     function bindEvents() {
-      $(".glyphicon.glyphicon-play-circle").click(function () {
-          hideStartButton();
-          getFinessDetailsByStartTimeViaApi('00:00');
-          showAthletesDetails();
-      });
-        $(".btn-primary").click(function (element) {
-            console.log(element.currentTarget.classList.add('disabled'));
+        $(".glyphicon.glyphicon-play-circle").click(function () {
+            hideStartButton();
+            getFinessDetailsByStartTimeViaApi('00:00');
+            showAthletesDetails();
         });
-        $(".btn-danger").click(function (element) {
+        $(".btn-primary").click(function (element) {
+            element.currentTarget.classList.add('disabled');
+            var atheleteId = element.currentTarget.parentNode.parentElement.getAttribute('data-id');
+            updateAtheleteRunningStatus(atheleteId, 'Warn');
+        });
+        $('.btn.btn-danger').click(function (element) {
             showResult(element);
         });
     }
 
     function populateAthletesDetails() {
-        $.each(athletes, function (index, value) {
-            var atheleteDivModel = `<div class="row">
-                    <div class="col-sm-3"><h4>{athele-name}</h4></div>
-                    <div class="col-sm-3"><button type="button" class="btn btn-primary">Warning</button></div>
+        var atheleteDivModel = `<div class="row"  data-id={athlete-id}>
+                    <div class="col-sm-3"><h4>{athlete-name}</h4></div>
+                    <div class="col-sm-3"><button type="button" class="btn btn-primary {disableStatus}">Warning</button></div>
                     <div class="col-sm-3"><button type="button" class="btn btn-danger">Error</button></div>
                     <div><h4 id="result"> </div>
                 </div><hr>`;
-            var atheleteResolveModel = atheleteDivModel.replace('{athele-name}', value);
+
+        $.each(athletes.atheleteDtos, function (index, athlete) {
+            var atheleteResolveModel = atheleteDivModel.replace('{athlete-name}', athlete.name);
+            atheleteResolveModel = atheleteResolveModel.replace('{athlete-id}', athlete.id);
+            if (athlete.isWarning) {
+                atheleteResolveModel = atheleteResolveModel.replace('{disableStatus}', 'disabled');
+            }
             $('#athlete-details').append(atheleteResolveModel);
         });
     }
@@ -44,13 +52,13 @@ $(document).ready(function () {
 
     function updateProgressBar(width) {
         progressBarWidth = Math.round((parseInt(width) / 3640) * 100);
-      if(progressBarWidth==100){
-          clearInterval(progressBarUpdateInterval);
-          disableStartButton();
-      }
-      $('.progress-bar').css('width',progressBarWidth+'%');
-      $('.progress-bar').text(progressBarWidth+'%');
-      
+        if (progressBarWidth == 100) {
+            clearInterval(progressBarUpdateInterval);
+            disableStartButton();
+        }
+        $('.progress-bar').css('width', progressBarWidth + '%');
+        $('.progress-bar').text(progressBarWidth + '%');
+
     }
 
     function hideAtheleteDiv() {
@@ -59,20 +67,20 @@ $(document).ready(function () {
     function showAthletesDetails() {
         $('#athlete-details').show();
     }
-    
-    function disableStartButton(){
-      $('.glyphicon.glyphicon-play-circle').attr('disabled','disabled');
+
+    function disableStartButton() {
+        $('.glyphicon.glyphicon-play-circle').attr('disabled', 'disabled');
     }
 
-    function hideStartButton(){
+    function hideStartButton() {
         $('.glyphicon.glyphicon-play-circle').hide();
     }
 
-    function hideRunningAlert(){
+    function hideRunningAlert() {
         $('.running-alert').hide();
     }
 
-    function showRunningAlert(){
+    function showRunningAlert() {
         $('.running-alert').show();
     }
 
@@ -85,21 +93,21 @@ $(document).ready(function () {
         $("#TotalDistance").text(getTotalDistance(fitnessRatingData.accumulatedShuttleDistance));
         showRunningAlert();
         startTime = getNextShuttleTime(fitnessRatingData.commulativeTime);
-        updateProgressBar(parseInt(fitnessRatingData.accumulatedShuttleDistance)-40);
+        updateProgressBar(parseInt(fitnessRatingData.accumulatedShuttleDistance) - 40);
         setTimeout(getFinessDetailsByStartTimeViaApi, getTimeout(fitnessRatingData));
     }
 
     function getTimeout(fitnessRatingData) {
-        var cumulativeTimeSeconds = parseInt(fitnessRatingData.commulativeTime.split(":")[1]); 
+        var cumulativeTimeSeconds = parseInt(fitnessRatingData.commulativeTime.split(":")[1]);
         var startTimeSeconds = parseInt(fitnessRatingData.startTime.split(":")[1]);
         var timeout = 0;
         if (cumulativeTimeSeconds > startTimeSeconds) {
             timeout = cumulativeTimeSeconds - startTimeSeconds;
         } else {
-            timeout = cumulativeTimeSeconds+60 - startTimeSeconds;
+            timeout = cumulativeTimeSeconds + 60 - startTimeSeconds;
         }
         console.log(timeout);
-        return timeout*1000;
+        return timeout * 1000;
     }
 
     function getTotalDistance(accumulatedShuttleDistance) {
@@ -123,7 +131,7 @@ $(document).ready(function () {
             nextShuttleTime = splitTime.join(":");
         } else {
             splitTime[1] = parseInt(splitTime[1]) + 1; // second handling
-             nextShuttleTime = splitTime.join(":");
+            nextShuttleTime = splitTime.join(":");
         }
         return nextShuttleTime;
     }
@@ -142,4 +150,31 @@ $(document).ready(function () {
             }
         });
     }
-  });
+    function getAtheleteDetails() {
+        $.ajax({
+            url: 'https://localhost:44397/api/fitnessRating/get-athelete-details',
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                athletes = result;
+                populateAthletesDetails();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+    function updateAtheleteRunningStatus(id, mode) {
+        $.ajax({
+            url: 'https://localhost:44397/api/fitnessRating/change-athelete-status?id=' + id + '&errorOrWarn=' + mode,
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                console.log(result);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+});

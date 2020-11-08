@@ -1,4 +1,5 @@
-﻿@{
+﻿@model FitnessRatingBeepServices.DTO.AtheleteFitnessBeepDto
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -46,7 +47,17 @@
             </div>
             <div class="track">
                 <h3>Track</h3><hr>
-                <div id="athlete-details"> </div>
+                <div id="athlete-details">
+                    @foreach (var atheleteDtos in Model.AtheleteDtos)
+                    {
+                        <div class="row" data-id=@atheleteDtos.Id>
+                            <div class="col-sm-3"><h4>@atheleteDtos.Name</h4></div>
+                            <div class="col-sm-3"><button type="button" class="btn btn-primary" disabled="@atheleteDtos.IsWarning">Warning</button></div>
+                            <div class="col-sm-3"><button type="button" class="btn btn-danger">Error</button></div>
+                            <div><h4 id="result"></h4> </div>
+                        </div><hr>
+                    }
+                </div>
             </div>
         </div>
     </div>

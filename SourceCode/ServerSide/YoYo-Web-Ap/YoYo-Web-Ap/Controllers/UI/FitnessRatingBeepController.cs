@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FitnessRatingBeepServices.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace YoYo_Web_Ap.Controllers.UI
@@ -9,10 +10,16 @@ namespace YoYo_Web_Ap.Controllers.UI
     [Route("yoyo-app")]
     public class FitnessRatingBeepController : Controller
     {
-        [Route("home")]
-        public IActionResult Index()
+        private readonly IFitnessRatingService _fitnessRatingService;
+
+        public FitnessRatingBeepController(IFitnessRatingService fitnessRatingService)
         {
-            return View();
+            this._fitnessRatingService = fitnessRatingService;
+        }
+        [Route("home")]
+        public async Task<IActionResult> Index()
+        {
+            return View(await _fitnessRatingService.GetAtheleteDtos());
         }
     }
 }
