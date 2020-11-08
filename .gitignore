@@ -3,3 +3,8 @@
 ################################################################################
 
 /SourceCode/ServerSide/YoYo-Web-Ap/FitnessRatingBeepServices/bin/Debug/netcoreapp3.1
+/SourceCode/ServerSide/YoYo-Web-Ap/FitnessRatingBeepRepository/bin/Debug/netcoreapp3.1
+/SourceCode/ServerSide/YoYo-Web-Ap/FitnessRatingBeepCommon/obj
+/SourceCode/ServerSide/YoYo-Web-Ap/FitnessRatingBeepCommon/bin/Debug/netcoreapp3.1
+/SourceCode/ServerSide/YoYo-Web-Ap/YoYo-Web-Ap/bin/Debug/netcoreapp3.1
+/SourceCode/ServerSide/YoYo-Web-Ap/YoYo-Web-Ap/obj/Debug/netcoreapp3.1/staticwebassets

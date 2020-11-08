@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FitnessRatingBeepCommon\FitnessRatingBeepCommon.csproj" />
     <ProjectReference Include="..\FitnessRatingBeepRepository\FitnessRatingBeepRepository.csproj" />
   </ItemGroup>
 

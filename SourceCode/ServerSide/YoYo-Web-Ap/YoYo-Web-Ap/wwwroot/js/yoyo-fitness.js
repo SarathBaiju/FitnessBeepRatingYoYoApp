@@ -23,6 +23,8 @@ $(document).ready(function () {
             updateAtheleteRunningStatus(atheleteId, 'Warn');
         });
         $('.btn.btn-danger').click(function (element) {
+            var atheleteId = element.currentTarget.parentNode.parentElement.getAttribute('data-id');
+            updateAtheleteRunningStatus(atheleteId, 'Error');
             showResult(element);
         });
     }
