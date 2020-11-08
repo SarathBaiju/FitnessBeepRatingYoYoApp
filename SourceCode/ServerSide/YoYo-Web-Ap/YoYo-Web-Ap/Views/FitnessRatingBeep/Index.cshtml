@@ -19,17 +19,20 @@
         <div class="text-center">
             <h4><b>YO-YO App</b></h4>
         </div>
-        <div class="progress">
-            <div class="progress-bar" style="width: 0%">0%</div>
-        </div>
-        <div class="startButton">
-            <span class="glyphicon glyphicon-play-circle">START</span>
-            <div class="running-alert">
-                <p>Level <b id="speedLevel"></b></p>
-                <p>Shuttle <b id="shuttle"></b></p>
-                <p>Speed <b id="levelSpeed">14</b>km/h</p>
+        <div id="progress-container">
+            <div class="progress">
+                <div class="progress-bar" style="width: 0%">0%</div>
+            </div>
+            <div class="startButton">
+                <span class="glyphicon glyphicon-play-circle">START</span>
+                <div class="running-alert">
+                    <p>Level <b id="speedLevel"></b></p>
+                    <p>Shuttle <b id="shuttle"></b></p>
+                    <p>Speed <b id="levelSpeed">14</b>km/h</p>
+                </div>
             </div>
         </div>
+        
         <div class="result-wrapper">
             <div class="row">
                 <div class="col-sm-4" style="background-color: lightyellow;text-align:center">
@@ -59,16 +62,13 @@
                     }
                 </div>
             </div>
-
-
-            <div id="athlete-results">
-                <h3>Results</h3>
-                <div class="row">
-                    <div class="col-sm-3"><h4>Sarath</h4></div>
-                    <div><h4 id="final-result">12-3</h4> </div>
-                </div><hr>
-            </div>
-
+        </div>
+        <div id="athlete-results">
+            <h3>Results</h3>
+            <div class="row">
+                <div class="col-sm-3"><h4>Sarath</h4></div>
+                <div><h4 id="final-result">12-3</h4> </div>
+            </div><hr>
         </div>
     </div>
 </body>

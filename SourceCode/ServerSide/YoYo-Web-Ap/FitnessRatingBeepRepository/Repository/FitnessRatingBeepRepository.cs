@@ -15,20 +15,27 @@ namespace FitnessRatingBeepRepository.Repository
         private const string atheleteBeepJsonPath = @"D:\Project\GitHub\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\DataSource\atheleteBeepRating.json";
         public async Task<List<FitnessRatingBeepData>> GetAllFitnessRatingBeepDetails()
         {
-            try
+            bool IsRead = false;
+            var fitnessRatingBeepData = new List<FitnessRatingBeepData>();
+            while (!IsRead)
             {
-                string jsonFromFile;
-                using (var reader = new StreamReader(fitnessRatingBeepJsonPath))
+                try
                 {
-                    jsonFromFile = reader.ReadToEnd();
+                    string jsonFromFile;
+                    using (var reader = new StreamReader(fitnessRatingBeepJsonPath))
+                    {
+                        jsonFromFile = reader.ReadToEnd();
+                        reader.Close();
+                    }
+                    fitnessRatingBeepData = JsonConvert.DeserializeObject<List<FitnessRatingBeepData>>(jsonFromFile);
+                    IsRead = true;
                 }
-                var fitnessRatingBeepData = JsonConvert.DeserializeObject<List<FitnessRatingBeepData>>(jsonFromFile);
-                return fitnessRatingBeepData;
+                catch (Exception exception)
+                {
+                    System.Threading.Thread.Sleep(100);
+                }
             }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            return fitnessRatingBeepData;
         }
 
         public async Task<List<AtheleteData>> GetAtheleteData()
@@ -39,6 +46,7 @@ namespace FitnessRatingBeepRepository.Repository
                 using (var reader = new StreamReader(atheleteBeepJsonPath))
                 {
                     jsonFromFile = reader.ReadToEnd();
+                    reader.Close();
                 }
                 var atheleteBeepData = JsonConvert.DeserializeObject<List<AtheleteData>>(jsonFromFile);
                 return atheleteBeepData;
@@ -60,6 +68,7 @@ namespace FitnessRatingBeepRepository.Repository
                     {
                         serializer.Serialize(jsonWriter,atheleteData);
                     }
+                    streamWriter.Close();
                 }
                 return true;
             }

@@ -77,8 +77,8 @@ namespace FitnessRatingBeepServices.Services
 
             atheleData.Result = new FitnessRatingBeepRepository.DataModel.ResultData()
             {
-                SpeedLevel = Int32.Parse(fitnessBeepDataByTotalDistance.SpeedLevel),
-                ShuttleNo = Int32.Parse(fitnessBeepDataByTotalDistance.ShuttleNo)
+                SpeedLevel = Int32.Parse(fitnessBeepDataByTotalDistance?.SpeedLevel),
+                ShuttleNo = Int32.Parse(fitnessBeepDataByTotalDistance?.ShuttleNo)
             };
 
             allAtheleData.Add(atheleData);
@@ -88,6 +88,11 @@ namespace FitnessRatingBeepServices.Services
         public async Task<AtheleteDto> GetAtheleteDtoById(int id)
         {
             return  _fitnessRatingBeepRepository.GetAtheleteData().Result.Where(s => s.Id.Equals(id)).FirstOrDefault().ToDto();
+        }
+
+        public async Task<bool> CheckAllAtheleteFinished()
+        {
+            return _fitnessRatingBeepRepository.GetAtheleteData().Result.All(s => s.IsError);
         }
     }
 }

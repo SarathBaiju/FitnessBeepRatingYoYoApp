@@ -4,13 +4,15 @@ $(document).ready(function () {
     var athletes = {
         atheleteDtos: [], isWarning: false
     };
-    atheleteResult = null;
+    atheleteResult = {};
    // getAtheleteDetails();
-    var fitnessBeepData = null;
+    var fitnessBeepData = {};
     bindEvents();
     hideAtheleteDiv();
+    hideAtheleteResult();
     hideRunningAlert();
     var startTime = "00:00";
+    var isAllAtheteCompleted=false; 
 
     function bindEvents() {
         $(".glyphicon.glyphicon-play-circle").click(function () {
@@ -47,11 +49,19 @@ $(document).ready(function () {
             $('#athlete-details').append(atheleteResolveModel);
         });
     }
-    function showResult(element, atheleteId) {
-         getAtheleteDetailsById(atheleteId);
-        var result = "Result : " + atheleteResult.speedLevel + " : " + atheleteResult.shuttleNo;
-        $(element.currentTarget.parentElement.parentElement).find("#result").text(result);
-        $(element.currentTarget.parentElement.parentElement).find('button').remove();
+     function showResult(element, atheleteId) {
+        checkAllAtheleteFinished();
+        
+        if (isAllAtheteCompleted) {
+            showAtheleteResult();
+            $('.result-wrapper').hide();
+            $('#progress-container').hide();
+        } else {
+            getAtheleteDetailsById(atheleteId);
+            var result = "Result : " + atheleteResult.resultDto.speedLevel + " : " + atheleteResult.resultDto.shuttleNo;
+            $(element.currentTarget.parentElement.parentElement).find("#result").text(result);
+            $(element.currentTarget.parentElement.parentElement).find('button').remove();
+        }
     }
 
     function updateProgressBar(width) {
@@ -67,6 +77,12 @@ $(document).ready(function () {
 
     function hideAtheleteDiv() {
         $('#athlete-details').hide();
+    }
+    function hideAtheleteResult() {
+        $('#athlete-results').hide();
+    }
+    function showAtheleteResult() {
+        $('#athlete-results').show();
     }
     function showAthletesDetails() {
         $('#athlete-details').show();
@@ -160,7 +176,7 @@ $(document).ready(function () {
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             success: function (result) {
-                athletes = result;
+               athletes = result;
                 populateAthletesDetails();
             },
             error: function (error) {
@@ -168,13 +184,30 @@ $(document).ready(function () {
             }
         });
     }
+
+    function checkAllAtheleteFinished() {
+        $.ajax({
+            url: 'https://localhost:44397/api/fitnessRating/check-all-athelete-completed',
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                isAllAtheteCompleted = result;
+                populateAthletesDetails();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
     function getAtheleteDetailsById(atheleteId) {
         $.ajax({
             url: 'https://localhost:44397/api/fitnessRating/get-athelete-ById?id=' + atheleteId,
             type: 'GET',
             contentType: "application/json; charset=utf-8",
+            async: false,
             success: function (result) {
-                atheleteResult = result.resultDto;
+                atheleteResult= result;
             },
             error: function (error) {
                 console.log(error);

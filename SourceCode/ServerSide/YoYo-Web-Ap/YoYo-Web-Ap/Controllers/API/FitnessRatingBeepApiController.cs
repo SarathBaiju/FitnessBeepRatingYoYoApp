@@ -45,13 +45,22 @@ namespace YoYo_Web_Ap.Controllers.API
         {
             return Ok(await _fitnessRatingService.GetAtheleteDtoById(id));
         }
+        [Route("check-all-athelete-completed")]
+        [HttpGet]
+        public async Task<IActionResult> CheckAllAtheleteFinished()
+        {
+            return Ok(await _fitnessRatingService.CheckAllAtheleteFinished());
+        }
         [Route("change-athelete-status")]
         [HttpPost]
         public async Task<IActionResult> WarnOrErrorAthelete([FromBody] AtheleteAlertViewModel atheleteAlertViewModel)
         {
             await _fitnessRatingService.UpdateAtheleteWarningOrErrorFlagById(atheleteAlertViewModel.Id, atheleteAlertViewModel.ErrorOrWarn);
+
+            if(atheleteAlertViewModel.ErrorOrWarn == EnumTypes.ErrorOrWarn.Error)
             await _fitnessRatingService.UpdateAtheleteResultByTotalDistance(atheleteAlertViewModel.TotalDistance, atheleteAlertViewModel.Id);
-            return Ok();
+
+            return Ok(true);
         }
     }
 }
