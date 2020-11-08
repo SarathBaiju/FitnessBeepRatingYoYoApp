@@ -4,6 +4,7 @@ $(document).ready(function () {
     var athletes = {
         atheleteDtos: [], isWarning: false
     };
+    atheleteResult = null;
    // getAtheleteDetails();
     var fitnessBeepData = null;
     bindEvents();
@@ -20,12 +21,12 @@ $(document).ready(function () {
         $(".btn-primary").click(function (element) {
             element.currentTarget.classList.add('disabled');
             var atheleteId = element.currentTarget.parentNode.parentElement.getAttribute('data-id');
-            updateAtheleteRunningStatus(atheleteId, 'Warn');
+            updateAtheleteRunningStatus(atheleteId, 2);
         });
         $('.btn.btn-danger').click(function (element) {
             var atheleteId = element.currentTarget.parentNode.parentElement.getAttribute('data-id');
-            updateAtheleteRunningStatus(atheleteId, 'Error');
-            showResult(element);
+            updateAtheleteRunningStatus(atheleteId, 1);
+            showResult(element, atheleteId);
         });
     }
 
@@ -46,8 +47,9 @@ $(document).ready(function () {
             $('#athlete-details').append(atheleteResolveModel);
         });
     }
-    function showResult(element) {
-        var result = "Result : " + fitnessBeepData.speedLevel + " : " + fitnessBeepData.shuttleNo;
+    function showResult(element, atheleteId) {
+         getAtheleteDetailsById(atheleteId);
+        var result = "Result : " + atheleteResult.speedLevel + " : " + atheleteResult.shuttleNo;
         $(element.currentTarget.parentElement.parentElement).find("#result").text(result);
         $(element.currentTarget.parentElement.parentElement).find('button').remove();
     }
@@ -166,11 +168,27 @@ $(document).ready(function () {
             }
         });
     }
-    function updateAtheleteRunningStatus(id, mode) {
+    function getAtheleteDetailsById(atheleteId) {
         $.ajax({
-            url: 'https://localhost:44397/api/fitnessRating/change-athelete-status?id=' + id + '&errorOrWarn=' + mode,
-            type: 'POST',
+            url: 'https://localhost:44397/api/fitnessRating/get-athelete-ById?id=' + atheleteId,
+            type: 'GET',
             contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                atheleteResult = result.resultDto;
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+    function updateAtheleteRunningStatus(id, mode) {
+        var atheleteAlertViewModel = { "Id": parseInt(id), "ErrorOrWarn": mode, "TotalDistance": parseInt(fitnessBeepData.accumulatedShuttleDistance)-40 };
+        $.ajax({
+            url: 'https://localhost:44397/api/fitnessRating/change-athelete-status',
+            type: 'POST',
+            data: JSON.stringify(atheleteAlertViewModel),
+            contentType: "application/json; charset=utf-8",
+            dataType:"json",
             success: function (result) {
                 console.log(result);
             },

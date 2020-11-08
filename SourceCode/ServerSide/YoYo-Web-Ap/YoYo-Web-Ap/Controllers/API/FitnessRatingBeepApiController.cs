@@ -7,6 +7,7 @@ using FitnessRatingBeepCommon;
 using FitnessRatingBeepServices.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using YoYo_Web_Ap.Models;
 
 namespace YoYo_Web_Ap.Controllers.API
 {
@@ -38,11 +39,19 @@ namespace YoYo_Web_Ap.Controllers.API
         {
             return Ok(await _fitnessRatingService.GetAtheleteDtos());
         }
+        [Route("get-athelete-ById")]
+        [HttpGet]
+        public async Task<IActionResult> GetAtheleteDetailsById(int id)
+        {
+            return Ok(await _fitnessRatingService.GetAtheleteDtoById(id));
+        }
         [Route("change-athelete-status")]
         [HttpPost]
-        public async Task<IActionResult> WarnOrErrorAthelete(int Id, EnumTypes.ErrorOrWarn errorOrWarn)
+        public async Task<IActionResult> WarnOrErrorAthelete([FromBody] AtheleteAlertViewModel atheleteAlertViewModel)
         {
-            return Ok(await _fitnessRatingService.UpdateAtheleteWarningOrErrorFlagById(Id, errorOrWarn));
+            await _fitnessRatingService.UpdateAtheleteWarningOrErrorFlagById(atheleteAlertViewModel.Id, atheleteAlertViewModel.ErrorOrWarn);
+            await _fitnessRatingService.UpdateAtheleteResultByTotalDistance(atheleteAlertViewModel.TotalDistance, atheleteAlertViewModel.Id);
+            return Ok();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace FitnessRatingBeepServices.Services
 
         public async Task<AtheleteFitnessBeepDto> GetAtheleteDtos()
         {
-            var atheleteDto=  _fitnessRatingBeepRepository.GetAtheleteData().Result.ToDtos();
+            var atheleteDto = _fitnessRatingBeepRepository.GetAtheleteData().Result.ToDtos();
             return ResolveAtheleteFitnessBeepDto(atheleteDto);
         }
 
@@ -65,6 +65,29 @@ namespace FitnessRatingBeepServices.Services
 
             atheleDatas.Add(atheleteData);
             return await _fitnessRatingBeepRepository.InsertIntoAtheleJsonData(atheleDatas);
+        }
+
+        public async Task<bool> UpdateAtheleteResultByTotalDistance(int totalDistance, int id)
+        {
+            var fitnessBeepData = await _fitnessRatingBeepRepository.GetAllFitnessRatingBeepDetails();
+            var fitnessBeepDataByTotalDistance = fitnessBeepData.Where(s => s.AccumulatedShuttleDistance.Equals(totalDistance.ToString())).FirstOrDefault();
+            var allAtheleData = await _fitnessRatingBeepRepository.GetAtheleteData();
+            var atheleData = allAtheleData.Where(s => s.Id.Equals(id)).FirstOrDefault();
+            allAtheleData.Remove(atheleData);
+
+            atheleData.Result = new FitnessRatingBeepRepository.DataModel.ResultData()
+            {
+                SpeedLevel = Int32.Parse(fitnessBeepDataByTotalDistance.SpeedLevel),
+                ShuttleNo = Int32.Parse(fitnessBeepDataByTotalDistance.ShuttleNo)
+            };
+
+            allAtheleData.Add(atheleData);
+            return await _fitnessRatingBeepRepository.InsertIntoAtheleJsonData(allAtheleData);
+        }
+
+        public async Task<AtheleteDto> GetAtheleteDtoById(int id)
+        {
+            return  _fitnessRatingBeepRepository.GetAtheleteData().Result.Where(s => s.Id.Equals(id)).FirstOrDefault().ToDto();
         }
     }
 }

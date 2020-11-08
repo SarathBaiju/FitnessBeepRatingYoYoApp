@@ -11,6 +11,8 @@ namespace FitnessRatingBeepServices.Contracts
         Task<List<FitnessRatingBeepDto>> GetAllFitnessRatingBeepDetails();
         Task<FitnessRatingBeepDto> GetFitnessRatingDetailsByStartTime(string startTime);
         Task<AtheleteFitnessBeepDto> GetAtheleteDtos();
+        Task<AtheleteDto> GetAtheleteDtoById(int id);
         Task<bool> UpdateAtheleteWarningOrErrorFlagById(int Id, EnumTypes.ErrorOrWarn errorOrWarn);
+        Task<bool> UpdateAtheleteResultByTotalDistance(int totalDistance, int Id);
     }
 }
