@@ -1,0 +1,5 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/SourceCode/ServerSide/YoYo-Web-Ap/FitnessRatingBeepServices/bin/Debug/netcoreapp3.1
