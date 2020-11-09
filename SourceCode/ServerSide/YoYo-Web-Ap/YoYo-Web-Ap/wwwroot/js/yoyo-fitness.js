@@ -82,7 +82,19 @@ $(document).ready(function () {
         $('#athlete-results').hide();
     }
     function showAtheleteResult() {
+        getAtheleteDetails();
         $('#athlete-results').show();
+        $.each(athletes.atheleteDtos, function (index, athete) {
+            var resultModel = `<div class="row">
+                <div class="col-sm-3"><h4>{name}</h4></div>
+                <div><h4 id="final-result">{result}</h4> </div>
+            </div><hr>`;
+            var result = athete.resultDto.speedLevel + " : " + athete.resultDto.shuttleNo;
+            var resolveResultModel = resultModel.replace("{name}", athete.name);
+            resolveResultModel = resolveResultModel.replace("{result}", result);
+            $('#athlete-results').append(resolveResultModel);
+        });
+
     }
     function showAthletesDetails() {
         $('#athlete-details').show();
@@ -175,9 +187,10 @@ $(document).ready(function () {
             url: 'https://localhost:44397/api/fitnessRating/get-athelete-details',
             type: 'GET',
             contentType: "application/json; charset=utf-8",
+            async: false,
             success: function (result) {
                athletes = result;
-                populateAthletesDetails();
+                //populateAthletesDetails();
             },
             error: function (error) {
                 console.log(error);
@@ -190,9 +203,10 @@ $(document).ready(function () {
             url: 'https://localhost:44397/api/fitnessRating/check-all-athelete-completed',
             type: 'GET',
             contentType: "application/json; charset=utf-8",
+            async:false,
             success: function (result) {
                 isAllAtheteCompleted = result;
-                populateAthletesDetails();
+                //populateAthletesDetails();
             },
             error: function (error) {
                 console.log(error);
@@ -221,7 +235,8 @@ $(document).ready(function () {
             type: 'POST',
             data: JSON.stringify(atheleteAlertViewModel),
             contentType: "application/json; charset=utf-8",
-            dataType:"json",
+            dataType: "json",
+            async:false,
             success: function (result) {
                 console.log(result);
             },
