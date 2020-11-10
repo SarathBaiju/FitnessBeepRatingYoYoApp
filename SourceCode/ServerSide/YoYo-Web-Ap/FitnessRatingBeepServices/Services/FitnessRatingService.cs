@@ -75,11 +75,22 @@ namespace FitnessRatingBeepServices.Services
             var atheleData = allAtheleData.Where(s => s.Id.Equals(id)).FirstOrDefault();
             allAtheleData.Remove(atheleData);
 
-            atheleData.Result = new FitnessRatingBeepRepository.DataModel.ResultData()
+            if(fitnessBeepDataByTotalDistance == null)
             {
-                SpeedLevel = Int32.Parse(fitnessBeepDataByTotalDistance?.SpeedLevel),
-                ShuttleNo = Int32.Parse(fitnessBeepDataByTotalDistance?.ShuttleNo)
-            };
+                atheleData.Result = new FitnessRatingBeepRepository.DataModel.ResultData()
+                {
+                    SpeedLevel = Int32.Parse(fitnessBeepDataByTotalDistance?.SpeedLevel),
+                    ShuttleNo = Int32.Parse(fitnessBeepDataByTotalDistance?.ShuttleNo)
+                };
+            }
+            else
+            {
+                atheleData.Result = new FitnessRatingBeepRepository.DataModel.ResultData()
+                {
+                    SpeedLevel = Int32.Parse(fitnessBeepDataByTotalDistance.SpeedLevel),
+                    ShuttleNo = Int32.Parse(fitnessBeepDataByTotalDistance.ShuttleNo)
+                };
+            }
 
             allAtheleData.Add(atheleData);
             return await _fitnessRatingBeepRepository.InsertIntoAtheleJsonData(allAtheleData);

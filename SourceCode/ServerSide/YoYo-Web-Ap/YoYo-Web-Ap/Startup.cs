@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FitnessRatingBeepRepository.Contracts;
+using FitnessRatingBeepRepository.DataModel;
 using FitnessRatingBeepServices.Contracts;
 using FitnessRatingBeepServices.Services;
 using Microsoft.AspNetCore.Builder;
@@ -26,14 +27,22 @@ namespace YoYo_Web_Ap
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             //Services
             services.AddScoped<IFitnessRatingService,FitnessRatingService>();
 
             //Repository
             services.AddScoped<IFitnessRatingBeepRepository, FitnessRatingBeepRepository.Repository.FitnessRatingBeepRepository>();
+
+            //Set mock athelete data
+            var buildServiceProvider = services.BuildServiceProvider();
+            var fitnessBeepRatingRepository = buildServiceProvider.GetRequiredService<IFitnessRatingBeepRepository>();
+            fitnessBeepRatingRepository.InsertIntoAtheleJsonData(GetDummyAtheleJsonData());
+
             services.AddControllersWithViews();
         }
 
+       
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -60,6 +69,15 @@ namespace YoYo_Web_Ap
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+        private List<AtheleteData> GetDummyAtheleJsonData()
+        {
+            var atheleteData = new List<AtheleteData>();
+            for (int i = 1; i < 6; i++)
+            {
+                atheleteData.Add(new AtheleteData { Id = i, Name = $"user {i}"});
+            }
+            return atheleteData;
         }
     }
 }
