@@ -16,4 +16,5 @@ namespace YoYo_Web_Ap.Models
         public string StartTime { get; set; }
         public string ApproxVo2Max { get; set; }
     }
+    
 }

@@ -1,5 +1,6 @@
 ﻿using FitnessRatingBeepCommon;
 using FitnessRatingBeepRepository.Contracts;
+using FitnessRatingBeepRepository.DataModel;
 using FitnessRatingBeepServices.Contracts;
 using FitnessRatingBeepServices.DTO;
 using FitnessRatingBeepServices.Helper;
@@ -70,28 +71,50 @@ namespace FitnessRatingBeepServices.Services
         public async Task<bool> UpdateAtheleteResultByTotalDistance(int totalDistance, int id)
         {
             var fitnessBeepData = await _fitnessRatingBeepRepository.GetAllFitnessRatingBeepDetails();
-            var fitnessBeepDataByTotalDistance = fitnessBeepData.Where(s => s.AccumulatedShuttleDistance.Equals(totalDistance.ToString())).FirstOrDefault();
+            //var fitnessBeepDataByTotalDistance = fitnessBeepData.Where(s => s.AccumulatedShuttleDistance.Equals(totalDistance.ToString())).FirstOrDefault();
+            var fitnessBeepDataByTotalDistance = fitnessBeepData.Where((s) => { 
+                return Int32.Parse(s.AccumulatedShuttleDistance)<=totalDistance ;
+            }).ToList();
             var allAtheleData = await _fitnessRatingBeepRepository.GetAtheleteData();
             var atheleData = allAtheleData.Where(s => s.Id.Equals(id)).FirstOrDefault();
             allAtheleData.Remove(atheleData);
 
-            if(fitnessBeepDataByTotalDistance == null)
+            atheleData.Result = new List<FitnessRatingBeepRepository.DataModel.ResultData>();
+
+            if(fitnessBeepDataByTotalDistance != null && fitnessBeepDataByTotalDistance.Count>0)
             {
-                atheleData.Result = new FitnessRatingBeepRepository.DataModel.ResultData()
+                foreach (var atheleCompleteLevel in fitnessBeepDataByTotalDistance)
                 {
-                    SpeedLevel = Int32.Parse(fitnessBeepDataByTotalDistance?.SpeedLevel),
-                    ShuttleNo = Int32.Parse(fitnessBeepDataByTotalDistance?.ShuttleNo)
-                };
+                    if(atheleCompleteLevel == null)
+                    {
+                        atheleData.Result.Add(new ResultData
+                        {
+                            ShuttleNo = 0,
+                            SpeedLevel = 0,
+                            IsCurrentStatus = Int32.Parse(atheleCompleteLevel.AccumulatedShuttleDistance) == totalDistance?true:false
+                        });
+                    }
+                    else
+                    {
+                        atheleData.Result.Add(new ResultData
+                        {
+                            ShuttleNo = Int32.Parse(atheleCompleteLevel.ShuttleNo),
+                            SpeedLevel = Int32.Parse(atheleCompleteLevel.SpeedLevel),
+                            IsCurrentStatus = Int32.Parse(atheleCompleteLevel.AccumulatedShuttleDistance) == totalDistance ? true : false
+                        });
+                    }
+                }
             }
             else
             {
-                atheleData.Result = new FitnessRatingBeepRepository.DataModel.ResultData()
+                atheleData.Result.Add(new ResultData
                 {
-                    SpeedLevel = Int32.Parse(fitnessBeepDataByTotalDistance.SpeedLevel),
-                    ShuttleNo = Int32.Parse(fitnessBeepDataByTotalDistance.ShuttleNo)
-                };
+                    ShuttleNo = 0,
+                    SpeedLevel = 0,
+                    IsCurrentStatus = true
+                });
             }
-
+           
             allAtheleData.Add(atheleData);
             return await _fitnessRatingBeepRepository.InsertIntoAtheleJsonData(allAtheleData);
         }

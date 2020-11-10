@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FitnessRatingBeepCommon;
 using FitnessRatingBeepServices.Contracts;
+using FitnessRatingBeepServices.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using YoYo_Web_Ap.Models;
@@ -37,8 +38,10 @@ namespace YoYo_Web_Ap.Controllers.API
         [HttpGet]
         public async Task<IActionResult> GetAtheleteDetails()
         {
-            return Ok(await _fitnessRatingService.GetAtheleteDtos());
+            var atheleteFitnessBeepDto = await _fitnessRatingService.GetAtheleteDtos();
+            return Ok(MapAtheleteFitnessBeepDtoToViewModel(atheleteFitnessBeepDto));
         }
+
         [Route("get-athelete-ById")]
         [HttpGet]
         public async Task<IActionResult> GetAtheleteDetailsById(int id)
@@ -61,6 +64,47 @@ namespace YoYo_Web_Ap.Controllers.API
             await _fitnessRatingService.UpdateAtheleteResultByTotalDistance(atheleteAlertViewModel.TotalDistance, atheleteAlertViewModel.Id);
 
             return Ok(true);
+        }
+        private AtheleteFitnessBeepViewModel MapAtheleteFitnessBeepDtoToViewModel(AtheleteFitnessBeepDto atheleteFitnessBeepDto)
+        {
+            var atheleteFitnessBeepViewModel = new AtheleteFitnessBeepViewModel();
+            if (atheleteFitnessBeepDto == null)
+            {
+                return atheleteFitnessBeepViewModel;
+            }
+            else
+            {
+                atheleteFitnessBeepViewModel.AtheleteViewModels = new List<AtheleteViewModel>();
+                foreach (var atheleteDto in atheleteFitnessBeepDto.AtheleteDtos)
+                {
+                    if (atheleteDto != null)
+                    {
+                        atheleteFitnessBeepViewModel.AtheleteViewModels.Add(new AtheleteViewModel
+                        {
+                            Id = atheleteDto.Id,
+                            Name = atheleteDto.Name,
+                            IsError = atheleteDto.IsError,
+                            IsWarning = atheleteDto.IsWarning,
+                            ResultViewModel = MapToResultViewModel(atheleteDto.ResultDto.Where(s => s.IsCurrentStatus).FirstOrDefault())
+                        });
+                    }
+                }
+
+            }
+            return atheleteFitnessBeepViewModel;
+        }
+
+        private ResultViewModel MapToResultViewModel(ResultDto resultDto)
+        {
+            var resultViewModel = new ResultViewModel();
+            if (resultDto == null)
+            {
+                return resultViewModel;
+            }
+            resultViewModel.IsCurrentStatus = resultDto.IsCurrentStatus;
+            resultViewModel.ShuttleNo = resultDto.ShuttleNo;
+            resultViewModel.SpeedLevel = resultDto.SpeedLevel;
+            return resultViewModel;
         }
     }
 }

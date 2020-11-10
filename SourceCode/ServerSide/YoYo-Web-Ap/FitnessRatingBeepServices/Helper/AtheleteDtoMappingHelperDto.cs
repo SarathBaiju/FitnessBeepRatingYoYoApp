@@ -10,7 +10,7 @@ namespace FitnessRatingBeepServices.Helper
     {
         public static List<AtheleteDto> ToDtos(this List<AtheleteData> atheleteDatas)
         {
-            if(atheleteDatas == null)
+            if (atheleteDatas == null)
             {
                 return new List<AtheleteDto>();
             }
@@ -23,7 +23,7 @@ namespace FitnessRatingBeepServices.Helper
         }
         public static AtheleteDto ToDto(this AtheleteData atheleteData)
         {
-            if(atheleteData == null)
+            if (atheleteData == null)
             {
                 return new AtheleteDto();
             }
@@ -32,8 +32,39 @@ namespace FitnessRatingBeepServices.Helper
             atheleteDto.Name = atheleteData.Name;
             atheleteDto.IsWarning = atheleteData.IsWarning;
             atheleteDto.IsError = atheleteData.IsError;
-            atheleteDto.ResultDto = atheleteData.Result != null? new ResultDto { ShuttleNo = atheleteData.Result.ShuttleNo, SpeedLevel = atheleteData.Result.SpeedLevel }:new ResultDto();
+            atheleteDto.ResultDto = MapToResultDto(atheleteData.Result);
             return atheleteDto;
+        }
+
+        private static List<ResultDto> MapToResultDto(List<ResultData> resultData)
+        {
+            var resultDto = new List<ResultDto>();
+            if (resultData == null)
+            {
+                return resultDto;
+            }
+            foreach (var result in resultData)
+            {
+                if(result != null)
+                {
+                    resultDto.Add(new ResultDto
+                    {
+                        ShuttleNo = result.ShuttleNo,
+                        SpeedLevel = result.SpeedLevel,
+                        IsCurrentStatus = result.IsCurrentStatus
+                    });
+                }
+                else
+                {
+                    resultDto.Add(new ResultDto
+                    {
+                        ShuttleNo = 0,
+                        SpeedLevel = 0,
+                        IsCurrentStatus = result.IsCurrentStatus
+                    });
+                } 
+            }
+            return resultDto;
         }
     }
 }

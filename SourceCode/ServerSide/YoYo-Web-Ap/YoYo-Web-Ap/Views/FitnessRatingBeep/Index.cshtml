@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="result-wrapper">
             <div class="row">
                 <div class="col-sm-4" style="background-color: lightyellow;text-align:center">
@@ -57,7 +57,17 @@
                             <div class="col-sm-3"><h4>@atheleteDtos.Name</h4></div>
                             <div class="col-sm-3"><button type="button" class="btn btn-primary" disabled="@atheleteDtos.IsWarning">Warning</button></div>
                             <div class="col-sm-3"><button type="button" class="btn btn-danger">Error</button></div>
-                            <div><h4 id="result"></h4> </div>
+                            <div class="col-sm-4 result" style="display:none">
+                                <div>
+                                    <form>
+                                        <div class="form-group">
+                                            <select class="form-control" id="sel2">
+                                                @*<option id="shuttleSpeedLevel"></option>*@
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div><hr>
                     }
                 </div>
@@ -65,7 +75,7 @@
         </div>
         <div id="athlete-results">
             <h3>Results</h3>
-            
+
         </div>
     </div>
 </body>

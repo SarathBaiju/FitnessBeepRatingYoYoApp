@@ -8,16 +8,18 @@ $(document).ready(function () {
    // getAtheleteDetails();
     var fitnessBeepData = {};
     bindEvents();
+    hideShuttleLevelSpeedSelector();
     hideAtheleteDiv();
     hideAtheleteResult();
     hideRunningAlert();
     var startTime = "00:00";
-    var isAllAtheteCompleted=false; 
+    var isAllAtheteCompleted = false; 
+    const defaultStartTime = "00:00";
 
     function bindEvents() {
         $(".glyphicon.glyphicon-play-circle").click(function () {
             hideStartButton();
-            getFinessDetailsByStartTimeViaApi('00:00');
+            getFinessDetailsByStartTimeViaApi(defaultStartTime);
             showAthletesDetails();
         });
         $(".btn-primary").click(function (element) {
@@ -32,23 +34,23 @@ $(document).ready(function () {
         });
     }
 
-    function populateAthletesDetails() {
-        var atheleteDivModel = `<div class="row"  data-id={athlete-id}>
-                    <div class="col-sm-3"><h4>{athlete-name}</h4></div>
-                    <div class="col-sm-3"><button type="button" class="btn btn-primary {disableStatus}">Warning</button></div>
-                    <div class="col-sm-3"><button type="button" class="btn btn-danger">Error</button></div>
-                    <div><h4 id="result"> </div>
-                </div><hr>`;
+    //function populateAthletesDetails() {
+    //    var atheleteDivModel = `<div class="row"  data-id={athlete-id}>
+    //                <div class="col-sm-3"><h4>{athlete-name}</h4></div>
+    //                <div class="col-sm-3"><button type="button" class="btn btn-primary {disableStatus}">Warning</button></div>
+    //                <div class="col-sm-3"><button type="button" class="btn btn-danger">Error</button></div>
+    //                <div><h4 id="result"> </div>
+    //            </div><hr>`;
 
-        $.each(athletes.atheleteDtos, function (index, athlete) {
-            var atheleteResolveModel = atheleteDivModel.replace('{athlete-name}', athlete.name);
-            atheleteResolveModel = atheleteResolveModel.replace('{athlete-id}', athlete.id);
-            if (athlete.isWarning) {
-                atheleteResolveModel = atheleteResolveModel.replace('{disableStatus}', 'disabled');
-            }
-            $('#athlete-details').append(atheleteResolveModel);
-        });
-    }
+    //    $.each(athletes.atheleteDtos, function (index, athlete) {
+    //        var atheleteResolveModel = atheleteDivModel.replace('{athlete-name}', athlete.name);
+    //        atheleteResolveModel = atheleteResolveModel.replace('{athlete-id}', athlete.id);
+    //        if (athlete.isWarning) {
+    //            atheleteResolveModel = atheleteResolveModel.replace('{disableStatus}', 'disabled');
+    //        }
+    //        $('#athlete-details').append(atheleteResolveModel);
+    //    });
+    //}
      function showResult(element, atheleteId) {
         checkAllAtheleteFinished();
         
@@ -58,8 +60,22 @@ $(document).ready(function () {
             $('#progress-container').hide();
         } else {
             getAtheleteDetailsById(atheleteId);
-            var result = "Result : " + atheleteResult.resultDto.speedLevel + " : " + atheleteResult.resultDto.shuttleNo;
-            $(element.currentTarget.parentElement.parentElement).find("#result").text(result);
+            showShuttleLevelSpeedSelector();
+            var optionElement = `<option>{shuttleSpeedlevel}</option>`;
+            var optionSelectElement = `<option selected>{shuttleSpeedlevel}</option>`;
+            $.each(atheleteResult.resultDto, function (index, resultDto) {
+                var result = resultDto.speedLevel + " : " + resultDto.shuttleNo;
+                var resolveOption = '';
+                if (resultDto.isCurrentStatus) {
+                    resolveOption = optionSelectElement.replace('{shuttleSpeedlevel}', result);
+                } else {
+                    resolveOption = optionElement.replace('{shuttleSpeedlevel}', result);
+                }
+                $(element.currentTarget.parentElement.parentElement).find(".form-control").append(resolveOption);
+            });
+            //var result = atheleteResult.resultDto.speedLevel + " : " + atheleteResult.resultDto.shuttleNo;
+            $(element.currentTarget.parentElement.parentElement).find(".result").show();
+           // $(element.currentTarget.parentElement.parentElement).find("#shuttleSpeedLevel").text(result);
             $(element.currentTarget.parentElement.parentElement).find('button').remove();
         }
     }
@@ -78,18 +94,24 @@ $(document).ready(function () {
     function hideAtheleteDiv() {
         $('#athlete-details').hide();
     }
+    function hideShuttleLevelSpeedSelector() {
+        $('#result').hide();
+    }
+    function showShuttleLevelSpeedSelector() {
+        $('#result').show();
+    }
     function hideAtheleteResult() {
         $('#athlete-results').hide();
     }
     function showAtheleteResult() {
         getAtheleteDetails();
         $('#athlete-results').show();
-        $.each(athletes.atheleteDtos, function (index, athete) {
+        $.each(athletes.atheleteViewModels, function (index, athete) {
             var resultModel = `<div class="row">
                 <div class="col-sm-3"><h4>{name}</h4></div>
                 <div><h4 id="final-result">{result}</h4> </div>
             </div><hr>`;
-            var result = athete.resultDto.speedLevel + " : " + athete.resultDto.shuttleNo;
+            var result = athete.resultViewModel.speedLevel + " : " + athete.resultViewModel.shuttleNo;
             var resolveResultModel = resultModel.replace("{name}", athete.name);
             resolveResultModel = resolveResultModel.replace("{result}", result);
             $('#athlete-results').append(resolveResultModel);

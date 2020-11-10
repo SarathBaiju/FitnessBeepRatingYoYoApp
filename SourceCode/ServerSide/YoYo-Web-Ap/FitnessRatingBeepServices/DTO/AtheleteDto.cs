@@ -10,7 +10,7 @@ namespace FitnessRatingBeepServices.DTO
         public string Name { get; set; }
         public bool IsWarning { get; set; }
         public bool IsError { get; set; }
-        public ResultDto ResultDto { get; set; }
+        public List<ResultDto> ResultDto { get; set; }
     }
     public class AtheleteFitnessBeepDto
     {

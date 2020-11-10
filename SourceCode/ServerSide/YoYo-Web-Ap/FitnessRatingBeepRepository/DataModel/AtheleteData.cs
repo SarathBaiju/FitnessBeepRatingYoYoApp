@@ -10,6 +10,6 @@ namespace FitnessRatingBeepRepository.DataModel
         public string Name { get; set; }
         public bool IsWarning { get; set; }
         public bool IsError { get; set; }
-        public ResultData Result { get; set; }
+        public List<ResultData> Result { get; set; }
     }
 }
