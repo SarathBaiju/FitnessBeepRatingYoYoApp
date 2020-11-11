@@ -11,8 +11,15 @@ namespace FitnessRatingBeepRepository.Repository
 {
     public class FitnessRatingBeepRepository : IFitnessRatingBeepRepository
     {
-        private const string fitnessRatingBeepJsonPath = @"D:\Project\GitHub\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\DataSource\fitnessrating_beeptest.json";
-        private const string atheleteBeepJsonPath = @"D:\Project\GitHub\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\DataSource\atheleteBeepRating.json";
+        private const string fitnessRatingBeepJsonPath = "fitnessrating_beeptest.json";
+        private const string atheleteBeepJsonPath = "atheleteBeepRating.json";
+        private readonly string path;
+
+        public FitnessRatingBeepRepository()
+        {
+            path = Directory.GetCurrentDirectory()+ "\\DataSource\\";
+        }
+
         public async Task<List<FitnessRatingBeepData>> GetAllFitnessRatingBeepDetails()
         {
             bool IsRead = false;
@@ -22,7 +29,7 @@ namespace FitnessRatingBeepRepository.Repository
                 try
                 {
                     string jsonFromFile;
-                    using (var reader = new StreamReader(fitnessRatingBeepJsonPath))
+                    using (var reader = new StreamReader(path+fitnessRatingBeepJsonPath))
                     {
                         jsonFromFile = reader.ReadToEnd();
                         reader.Close();
@@ -43,7 +50,7 @@ namespace FitnessRatingBeepRepository.Repository
             try
             {
                 string jsonFromFile;
-                using (var reader = new StreamReader(atheleteBeepJsonPath))
+                using (var reader = new StreamReader(path+atheleteBeepJsonPath))
                 {
                     jsonFromFile = reader.ReadToEnd();
                     reader.Close();
@@ -62,7 +69,7 @@ namespace FitnessRatingBeepRepository.Repository
             try
             {
                 JsonSerializer serializer = new JsonSerializer();
-                using (var streamWriter = new StreamWriter(atheleteBeepJsonPath))
+                using (var streamWriter = new StreamWriter(path+atheleteBeepJsonPath))
                 {
                     using (var jsonWriter = new JsonTextWriter(streamWriter))
                     {
