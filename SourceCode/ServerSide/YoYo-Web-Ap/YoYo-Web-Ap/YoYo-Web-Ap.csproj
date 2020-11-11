@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FitnessRatingBeepCommon\FitnessRatingBeepCommon.csproj" />
     <ProjectReference Include="..\FitnessRatingBeepServices\FitnessRatingBeepServices.csproj" />
   </ItemGroup>
 
