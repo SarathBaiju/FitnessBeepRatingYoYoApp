@@ -64,7 +64,7 @@ namespace FitnessRatingBeepRepository.Repository
             }
         }
 
-        public async Task<bool> InsertIntoAtheleJsonData(List<AtheleteData> atheleteData)
+        public async Task<bool> InsertIntoAtheleteJsonData(List<AtheleteData> atheleteData)
         {
             try
             {

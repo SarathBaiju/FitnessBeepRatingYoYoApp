@@ -10,8 +10,13 @@ namespace YoYo_Web_Ap.Controllers.UI
     [Route("yoyo-app")]
     public class FitnessRatingBeepController : Controller
     {
+        #region PRIVATE INSTANCE FIELDS
+
         private readonly IFitnessRatingService _fitnessRatingService;
 
+        #endregion
+
+        #region PUBLIC METHODS
         public FitnessRatingBeepController(IFitnessRatingService fitnessRatingService)
         {
             this._fitnessRatingService = fitnessRatingService;
@@ -21,5 +26,6 @@ namespace YoYo_Web_Ap.Controllers.UI
         {
             return View(await _fitnessRatingService.GetAtheleteDtos());
         }
+        #endregion
     }
 }

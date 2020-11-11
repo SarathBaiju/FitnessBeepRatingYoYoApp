@@ -37,7 +37,7 @@ namespace YoYo_Web_Ap
             //Set mock athelete data
             var buildServiceProvider = services.BuildServiceProvider();
             var fitnessBeepRatingRepository = buildServiceProvider.GetRequiredService<IFitnessRatingBeepRepository>();
-            fitnessBeepRatingRepository.InsertIntoAtheleJsonData(GetDummyAtheleJsonData());
+            fitnessBeepRatingRepository.InsertIntoAtheleteJsonData(GetDummyAtheleJsonData());
 
             services.AddControllersWithViews();
         }
@@ -70,14 +70,16 @@ namespace YoYo_Web_Ap
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+        #region PRIVATE METHODS
         private List<AtheleteData> GetDummyAtheleJsonData()
         {
             var atheleteData = new List<AtheleteData>();
-            for (int i = 1; i < 6; i++)
+            for (int i = 1; i < 5; i++)
             {
                 atheleteData.Add(new AtheleteData { Id = i, Name = $"user {i}"});
             }
             return atheleteData;
         }
+        #endregion
     }
 }

@@ -16,12 +16,21 @@ namespace YoYo_Web_Ap.Controllers.API
     [ApiController]
     public class FitnessRatingBeepApiController : ControllerBase
     {
+
+        #region PRIVATE INSTANCE FIELDS
         private readonly IFitnessRatingService _fitnessRatingService;
+        #endregion
+
+        #region CONSTRUCTOR
 
         public FitnessRatingBeepApiController(IFitnessRatingService fitnessRatingService)
         {
             _fitnessRatingService = fitnessRatingService;
         }
+
+        #endregion
+
+        #region PUBLIC METHODS
         [Route("get-all")]
         [HttpGet]
         public async Task<IActionResult> GetAllFitnessRatingBeepDetails()
@@ -77,6 +86,10 @@ namespace YoYo_Web_Ap.Controllers.API
             };
             return Ok(_fitnessRatingService.UpdateAtheleteResult(atheleUpdateResultDto));
         }
+
+        #endregion
+
+        #region PRIVATE METHODS
         private AtheleteFitnessBeepViewModel MapAtheleteFitnessBeepDtoToViewModel(AtheleteFitnessBeepDto atheleteFitnessBeepDto)
         {
             var atheleteFitnessBeepViewModel = new AtheleteFitnessBeepViewModel();
@@ -118,6 +131,8 @@ namespace YoYo_Web_Ap.Controllers.API
             resultViewModel.SpeedLevel = resultDto.SpeedLevel;
             return resultViewModel;
         }
+
+        #endregion
     }
 }
 

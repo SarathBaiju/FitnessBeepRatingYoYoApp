@@ -8,6 +8,6 @@ namespace FitnessRatingBeepRepository.Contracts
     {
         Task<List<FitnessRatingBeepData>> GetAllFitnessRatingBeepDetails();
         Task<List<AtheleteData>> GetAtheleteData();
-        Task<bool> InsertIntoAtheleJsonData(List<AtheleteData> atheleteData);
+        Task<bool> InsertIntoAtheleteJsonData(List<AtheleteData> atheleteData);
     }
 }
