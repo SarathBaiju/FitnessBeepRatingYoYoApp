@@ -32,25 +32,17 @@ $(document).ready(function () {
             updateAtheleteRunningStatus(atheleteId, 1);
             showResult(element, atheleteId);
         });
+        $('.form-control').change(function (element) {
+            var selectOpIndex = element.currentTarget.selectedIndex;
+            var optionValue = element.currentTarget.childNodes[selectOpIndex+1].value;
+            var optionValueArray = optionValue.split(" : ");
+            var speedLevel = optionValueArray[0];
+            var shuttleNumber = optionValueArray[1];
+            var userId = element.currentTarget.getAttribute("userid");
+            updateAtheleteResultWithNewSpeedLevelAndSuttleNumber(speedLevel, shuttleNumber, userId);
+        });
     }
 
-    //function populateAthletesDetails() {
-    //    var atheleteDivModel = `<div class="row"  data-id={athlete-id}>
-    //                <div class="col-sm-3"><h4>{athlete-name}</h4></div>
-    //                <div class="col-sm-3"><button type="button" class="btn btn-primary {disableStatus}">Warning</button></div>
-    //                <div class="col-sm-3"><button type="button" class="btn btn-danger">Error</button></div>
-    //                <div><h4 id="result"> </div>
-    //            </div><hr>`;
-
-    //    $.each(athletes.atheleteDtos, function (index, athlete) {
-    //        var atheleteResolveModel = atheleteDivModel.replace('{athlete-name}', athlete.name);
-    //        atheleteResolveModel = atheleteResolveModel.replace('{athlete-id}', athlete.id);
-    //        if (athlete.isWarning) {
-    //            atheleteResolveModel = atheleteResolveModel.replace('{disableStatus}', 'disabled');
-    //        }
-    //        $('#athlete-details').append(atheleteResolveModel);
-    //    });
-    //}
      function showResult(element, atheleteId) {
         checkAllAtheleteFinished();
         
@@ -61,6 +53,7 @@ $(document).ready(function () {
         } else {
             getAtheleteDetailsById(atheleteId);
             showShuttleLevelSpeedSelector();
+            $(element.currentTarget.parentElement.parentElement).find(".form-control").attr("userId", atheleteResult.id);
             var optionElement = `<option>{shuttleSpeedlevel}</option>`;
             var optionSelectElement = `<option selected>{shuttleSpeedlevel}</option>`;
             $.each(atheleteResult.resultDto, function (index, resultDto) {
@@ -73,9 +66,7 @@ $(document).ready(function () {
                 }
                 $(element.currentTarget.parentElement.parentElement).find(".form-control").append(resolveOption);
             });
-            //var result = atheleteResult.resultDto.speedLevel + " : " + atheleteResult.resultDto.shuttleNo;
             $(element.currentTarget.parentElement.parentElement).find(".result").show();
-           // $(element.currentTarget.parentElement.parentElement).find("#shuttleSpeedLevel").text(result);
             $(element.currentTarget.parentElement.parentElement).find('button').remove();
         }
     }
@@ -198,6 +189,22 @@ $(document).ready(function () {
             success: function (result) {
                 fitnessBeepData = result;
                 pouplateRunningAlertData(result);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function updateAtheleteResultWithNewSpeedLevelAndSuttleNumber(speedLevel, shuttleNumber, userId) {
+        var atheleteUpdateResultViewModel = { userId: parseInt(userId), speedLevel: parseInt(speedLevel), shuttleNumber: parseInt(shuttleNumber) };
+        $.ajax({
+            url: 'https://localhost:44397/api/fitnessRating/update-athele-result',
+            type: 'Put',
+            data: JSON.stringify(atheleteUpdateResultViewModel),
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+               
             },
             error: function (error) {
                 console.log(error);

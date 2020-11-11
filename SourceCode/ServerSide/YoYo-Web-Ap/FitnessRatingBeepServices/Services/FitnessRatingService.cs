@@ -128,5 +128,45 @@ namespace FitnessRatingBeepServices.Services
         {
             return _fitnessRatingBeepRepository.GetAtheleteData().Result.All(s => s.IsError);
         }
+
+        public async Task<bool> UpdateAtheleteResult(AtheleteResultUpdateDto atheleteResultUpdateDto)
+        {
+            var allAtheleteData = await _fitnessRatingBeepRepository.GetAtheleteData();
+            var athelete = _fitnessRatingBeepRepository.GetAtheleteData().Result.Where(s => s.Id.Equals(atheleteResultUpdateDto.UserId)).FirstOrDefault();
+
+            var count = allAtheleteData.RemoveAll(athelete => athelete.Id == atheleteResultUpdateDto.UserId);
+
+            var newAtheleteDataList = allAtheleteData;
+
+            var atheleteResult = athelete.Result;
+            var IsCurrentResultData = atheleteResult.Where(s => s.IsCurrentStatus).FirstOrDefault();
+            atheleteResult.Remove(IsCurrentResultData);
+
+            //updating old resultData flag to false
+            atheleteResult.Add(new ResultData
+            {
+                IsCurrentStatus = false,
+                ShuttleNo = IsCurrentResultData.ShuttleNo,
+                SpeedLevel = IsCurrentResultData.SpeedLevel
+            });
+
+            //Remove newly Updated resultData from list
+
+            var getResultDataForCurrentShuttle = atheleteResult.Where(s => s.SpeedLevel.Equals(atheleteResultUpdateDto.SpeedLevel)&& s.ShuttleNo.Equals(atheleteResultUpdateDto.ShuttleNo)).FirstOrDefault();
+
+            atheleteResult.Remove(getResultDataForCurrentShuttle);
+
+            //updating new resultData flag to true
+            atheleteResult.Add(new ResultData
+            {
+                IsCurrentStatus = true,
+                ShuttleNo = atheleteResultUpdateDto.ShuttleNo,
+                SpeedLevel = atheleteResultUpdateDto.SpeedLevel
+            });
+
+            athelete.Result = atheleteResult;
+            newAtheleteDataList.Add(athelete);
+            return await _fitnessRatingBeepRepository.InsertIntoAtheleJsonData(allAtheleteData);
+        }
     }
 }

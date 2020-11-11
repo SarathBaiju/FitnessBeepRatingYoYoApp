@@ -11,8 +11,8 @@ namespace FitnessRatingBeepRepository.Repository
 {
     public class FitnessRatingBeepRepository : IFitnessRatingBeepRepository
     {
-        private const string fitnessRatingBeepJsonPath = @"C:\Users\sarath.bu\Source\Repos\FitnessBeepRatingYoYoApp\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\DataSource\fitnessrating_beeptest.json";
-        private const string atheleteBeepJsonPath = @"C:\Users\sarath.bu\Source\Repos\FitnessBeepRatingYoYoApp\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\DataSource\atheleteBeepRating.json";
+        private const string fitnessRatingBeepJsonPath = @"D:\Project\GitHub\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\DataSource\fitnessrating_beeptest.json";
+        private const string atheleteBeepJsonPath = @"D:\Project\GitHub\SourceCode\ServerSide\YoYo-Web-Ap\FitnessRatingBeepRepository\DataSource\atheleteBeepRating.json";
         public async Task<List<FitnessRatingBeepData>> GetAllFitnessRatingBeepDetails()
         {
             bool IsRead = false;

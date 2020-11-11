@@ -65,6 +65,18 @@ namespace YoYo_Web_Ap.Controllers.API
 
             return Ok(true);
         }
+        [Route("update-athele-result")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateAtheleteResult([FromBody] AtheleteUpdateResultViewModel atheleteUpdateResultViewModel)
+        {
+            var atheleUpdateResultDto = new AtheleteResultUpdateDto
+            {
+                UserId = atheleteUpdateResultViewModel.UserId,
+                SpeedLevel = atheleteUpdateResultViewModel.SpeedLevel,
+                ShuttleNo = atheleteUpdateResultViewModel.ShuttleNumber
+            };
+            return Ok(_fitnessRatingService.UpdateAtheleteResult(atheleUpdateResultDto));
+        }
         private AtheleteFitnessBeepViewModel MapAtheleteFitnessBeepDtoToViewModel(AtheleteFitnessBeepDto atheleteFitnessBeepDto)
         {
             var atheleteFitnessBeepViewModel = new AtheleteFitnessBeepViewModel();

@@ -9,6 +9,12 @@ namespace YoYo_Web_Ap.Models
         public EnumTypes.ErrorOrWarn ErrorOrWarn { get; set; }
         public int TotalDistance { get; set; }
     }
+    public class AtheleteUpdateResultViewModel
+    {
+        public int UserId { get; set; }
+        public int SpeedLevel { get; set; }
+        public int ShuttleNumber { get; set; }
+    }
     public class AtheleteFitnessBeepViewModel
     {
         public List<AtheleteViewModel> AtheleteViewModels { get; set; }
